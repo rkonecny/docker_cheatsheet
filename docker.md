@@ -20,7 +20,7 @@
 
   > runs the container with given id
 
-  > `-a` option prints the output from the conteiner to standard output (attach)
+  > `-a` option prints the output from the container to standard output (attach)
 
 - `docker system prune`
 
@@ -31,6 +31,15 @@
   > returns all logs from the container
 
 - `docker stop container_id`
+
   > sends SIGTERM to the process
+
 - `docker kill container_id`
+
   > sends SIGKILL to the process
+
+- `docker exec -it container_id command`
+
+  > executes an additional command in the container
+
+  > `-it` allows us to provide input to the container
