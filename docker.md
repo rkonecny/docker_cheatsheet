@@ -6,6 +6,8 @@
 
   > is equal to `docker create` and `docker start`
 
+  > `-p (localhost port):(container port)` port mapping
+
 - `docker ps`
 
   > lists all running containers
@@ -53,6 +55,12 @@
   ```dockerfile
   # Use an existing docker image as a base
   FROM alpine
+
+  # Any following command will be executed relative to this path in the container
+  WORKDIR /usr/app
+
+  # Copy files to docker container
+  COPY ./ ./
 
   # Download and install a dependency
   RUN apk add --update redis
