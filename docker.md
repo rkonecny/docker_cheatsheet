@@ -1,6 +1,6 @@
 # Docker commands
 
-- `docker run container_name alternative_command`
+- `docker run container_name/id alternative_command`
 
   > creates and runs docker container
 
@@ -43,3 +43,22 @@
   > executes an additional command in the container
 
   > `-it` allows us to provide input to the container
+
+- `docker build .`
+
+  > builds a docker image from Dockerfile in current directory
+
+  > Example:
+
+  ```dockerfile
+  # Use an existing docker image as a base
+  FROM alpine
+
+  # Download and install a dependency
+  RUN apk add --update redis
+
+  # Tell the image what to do when it starts as a container
+  CMD ["redis-server"]
+  ```
+
+  > `-t dockerId/project_name:version` creates a tag that can be used instead of id
