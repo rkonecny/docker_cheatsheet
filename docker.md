@@ -10,6 +10,10 @@
 
   > `-d` starts container in the background
 
+  > `-v $(pwd):/app` maps the pwd into the /app directory in the container
+
+  > `-v /app/node_modules` puts a bookmark on the node_modules folder (it points into the container), usually combined together with previous command
+
 - `docker ps`
 
   > lists all running containers
@@ -48,6 +52,10 @@
 
   > `-it` allows us to provide input to the container
 
+- `docker attach container_id`
+
+  > attaches stdin, stdout and stderr to the terminal
+
 - `docker build .`
 
   > builds a docker image from Dockerfile in current directory
@@ -71,7 +79,23 @@
   CMD ["redis-server"]
   ```
 
+  > Multistep example:
+
+  ```dockerfile
+  FROM node:alpine as builder
+  WORKDIR '/app'
+  COPY package.json .
+  RUN npm install
+  COPY . .
+  RUN npm run builder
+
+  FROM nginx
+  COPY --from=builder /app/build /usr/share/nginx/html
+  ```
+
   > `-t dockerId/project_name:version` creates a tag that can be used instead of id
+
+  > `-f filename` specifies the dockerfile which will be used to build the image
 
 ## Docker Compose
 
@@ -79,7 +103,7 @@
 - Used to start up multiple Docker containers at the same time
 - Automates some of the long-winded arguments passed to `docker run`
 
-> Example of `docker-compose.yml`:
+Example of `docker-compose.yml`:
 
 ```yml
 version: "3" # version of docker compose
@@ -89,8 +113,15 @@ services:
   node-app:
     restart: always
     build: . # look into current directory for Dockerfile
+        # or alternatively we can describe it more
+        context: .
+        dockerfile: Dockerfile.dev
     ports:
       - "8081:8081"
+    volumes:
+      - /app/node_modules
+      - .:/app
+    command: ["npm", "run", "test"] # overrides Dockerfile CMD
 ```
 
 ### Commands
