@@ -90,6 +90,7 @@
   RUN npm run builder
 
   FROM nginx
+  EXPOSE 80 # Exposing port automatically
   COPY --from=builder /app/build /usr/share/nginx/html
   ```
 
