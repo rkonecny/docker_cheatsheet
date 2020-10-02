@@ -1,3 +1,5 @@
+# Cheat sheet for some Docker commands
+
 # Docker commands
 
 - `docker run container_name/id alternative_command`
@@ -123,6 +125,9 @@ services:
       - /app/node_modules
       - .:/app
     command: ["npm", "run", "test"] # overrides Dockerfile CMD
+    environment: # environment variables
+      - REDIS_HOST=redis
+
 ```
 
 ### Commands
